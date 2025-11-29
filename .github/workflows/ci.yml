@@ -88,15 +88,21 @@ jobs:
     
     - name: Test Docker image
       run: |
+        # Create directories with proper permissions
         mkdir -p data output logs
+        chmod 777 output logs  # Allow container to write
+        
+        # Create test data
         echo "timestamp,account_id,product_id,side,price,quantity,event_type" > data/test.csv
         echo "2025-01-01T10:00:00Z,ACC050,TEST,BUY,100,1000,ORDER_PLACED" >> data/test.csv
         
+        # Run container
         docker run --rm \
           -v $(pwd)/data:/app/data:ro \
           -v $(pwd)/output:/app/output \
           -v $(pwd)/logs:/app/logs \
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
         
+        # Verify results
         test -f output/suspicious_accounts.csv
         echo "✅ Docker image tested successfully"
