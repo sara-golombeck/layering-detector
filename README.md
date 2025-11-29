@@ -115,6 +115,27 @@ pip install -r requirements-test.txt
 pytest tests/ -v
 ```
 
+## CI/CD Pipeline
+
+Automated GitHub Actions pipeline on every push to `main`:
+
+1. **Test** - Run unit tests with pytest
+2. **Build** - Create Docker image with auto-versioning  
+3. **Publish** - Push to GitHub Container Registry
+4. **Tag** - Create Git release tag
+
+![CI Pipeline](screenshots/ci.png)
+
+**Registry:** `ghcr.io/sara-golombeck/layering-detector`
+
+```bash
+# Pull latest version
+docker pull ghcr.io/sara-golombeck/layering-detector:latest
+
+# Pull specific version  
+docker pull ghcr.io/sara-golombeck/layering-detector:1.0.5
+```
+
 ## Technology Stack
 
 - **Python 3.11** - Core runtime
@@ -132,11 +153,11 @@ pytest tests/ -v
 
 ## Security Features
 
-- ✅ Non-root container execution
-- ✅ Read-only input volumes
-- ✅ Comprehensive input validation
-- ✅ Secure dependency management
-- ✅ No sensitive data exposure
+-  Non-root container execution
+-  Read-only input volumes
+-  Comprehensive input validation
+-  Secure dependency management
+-  No sensitive data exposure
 
 ## Example Detection
 
@@ -153,13 +174,21 @@ pytest tests/ -v
 
 **Result:** `ACC001` flagged as suspicious layering activity.
 
+## Project Structure
+
+![Project Structure](screenshots/tree_structure.png)
+
+## Docker Deployment
+
+![Docker Running](screenshots/docker_running.png)
+
 ## Requirements
 
 - Docker & Docker Compose (recommended)
-- Python 3.9+ (local development)
+- Python 3.9+ (local development)  
 - 512MB RAM minimum
 - CSV input data
 
 ---
 
-**Built for NICE Actimize** | **Production Ready** | **Enterprise Grade**# layering-detector
+**Built for NICE Actimize** | **Production Ready** | **Enterprise Grade**
