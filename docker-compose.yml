@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  layering-detector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: layering-detector
+    volumes:
+      - ./data:/app/data:ro
+      - ./output:/app/output
+      - ./logs:/app/logs
+    restart: "no"
