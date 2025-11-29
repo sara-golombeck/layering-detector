@@ -35,10 +35,10 @@ class TestLayeringDetection:
                 base_time,                          # ORDER_PLACED
                 base_time + timedelta(seconds=2),   # ORDER_PLACED  
                 base_time + timedelta(seconds=4),   # ORDER_PLACED
-                base_time + timedelta(seconds=6),   # ORDER_CANCELLED
-                base_time + timedelta(seconds=7),   # ORDER_CANCELLED
-                base_time + timedelta(seconds=8),   # ORDER_CANCELLED
-                base_time + timedelta(seconds=9),   # TRADE_EXECUTED (opposite)
+                base_time + timedelta(seconds=5),   # ORDER_CANCELLED (within 5s of first)
+                base_time + timedelta(seconds=6),   # ORDER_CANCELLED (within 4s of second)
+                base_time + timedelta(seconds=7),   # ORDER_CANCELLED (within 3s of third)
+                base_time + timedelta(seconds=8),   # TRADE_EXECUTED (within 2s of last cancel)
             ],
             'account_id': ['ACC001'] * 7,
             'product_id': ['IBM'] * 7,
@@ -141,8 +141,8 @@ class TestLayeringDetection:
         acc001_data = {
             'timestamp': [
                 base_time, base_time + timedelta(seconds=2), base_time + timedelta(seconds=4),
-                base_time + timedelta(seconds=6), base_time + timedelta(seconds=7), 
-                base_time + timedelta(seconds=8), base_time + timedelta(seconds=9)
+                base_time + timedelta(seconds=5), base_time + timedelta(seconds=6), 
+                base_time + timedelta(seconds=7), base_time + timedelta(seconds=8)
             ],
             'account_id': ['ACC001'] * 7,
             'product_id': ['IBM'] * 7,
